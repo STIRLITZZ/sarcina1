@@ -1,0 +1,31 @@
+version: '3.1'
+
+services:
+  php:
+    build: ./app
+    ports:
+       - 8081:80
+
+  db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+      #MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: formmmm
+    working_dir: /app
+  
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+
+      - PMA_ARBITRARY=1
+volumes:
+  mysql_data:
